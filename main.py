@@ -6,33 +6,6 @@ from sql_queries import SQLQueries
 import sqlite3
 from datetime import datetime, date
 
-# TEMPORARY DEBUG - See what files exist on Streamlit Cloud
-def debug_streamlit_environment():
-    import os
-    st.write("🔍 **Debug: What's on Streamlit Cloud?**")
-    st.write(f"Current directory: {os.getcwd()}")
-    
-    # Check for our important files
-    files_to_check = [
-        'database_setup.py',
-        'sql_queries.py',
-        'data/',
-        'data/providers_data.csv',
-        'data/food_listings_data.csv',
-        'database/',
-        'database/food_waste.db'
-    ]
-    
-    for file_path in files_to_check:
-        if os.path.exists(file_path):
-            st.write(f"✅ {file_path} - EXISTS")
-        else:
-            st.write(f"❌ {file_path} - MISSING")
-
-# Run debug first
-debug_streamlit_environment()
-st.write("---")
-
 
 # I'm configuring the page layout to make my app look professional
 st.set_page_config(
@@ -735,3 +708,4 @@ if __name__ == "__main__":
     app = FoodWasteApp()
 
     app.main_page()
+
