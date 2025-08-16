@@ -61,7 +61,8 @@ class FoodWasteApp:
             if not total_food.empty:
                 st.metric(
                     "Total Food Items", 
-                    f"{total_food.iloc[0]['Total_Food_Items']:,}",
+                   f"{total_food.iloc[0]['Total_Food_Items'] or 0:,}",
+
                     help="Total number of food items listed"  # I added helpful tooltips for users
                 )
         
@@ -70,7 +71,7 @@ class FoodWasteApp:
             if not total_food.empty:
                 st.metric(
                     "Total Quantity", 
-                    f"{total_food.iloc[0]['Total_Available_Quantity']:,} units",
+f"{total_food.iloc[0]['Total_Available_Quantity'] or 0:,} units",
                     help="Total quantity of food available"
                 )
         
@@ -79,7 +80,7 @@ class FoodWasteApp:
             if not total_food.empty:
                 st.metric(
                     "Active Providers", 
-                    f"{total_food.iloc[0]['Active_Providers']:,}",
+f"{total_food.iloc[0]['Active_Providers'] or 0:,}",
                     help="Number of active food providers"
                 )
         
