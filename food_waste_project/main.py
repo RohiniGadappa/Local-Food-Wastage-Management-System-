@@ -698,11 +698,42 @@ if __name__ == "__main__":
     """, unsafe_allow_html=True)
     
     # I'm checking if the database exists before starting the app - learned this from debugging
-    import os
-    if not os.path.exists("database/food_waste.db"):
-        st.error("❌ Database not found! Please run 'python database_setup.py' first.")
-        st.stop()
+  # Auto-setup database if it doesn't exist
+import os
+
+def setup_database_if_needed():
+    """Automatically set up database if it doesn't exist"""
+    db_path = "database/food_waste.db"
     
-    # I initialize and run my application
+    if not os.path.exists(db_path):
+        st.info("🔄 Database not found. Setting up database automatically...")
+        
+        try:
+            # Create database directory
+            os.makedirs("database", exist_ok=True)
+            
+            # Import and run database setup
+            from database_setup import DatabaseSetup
+            
+            with st.spinner("Creating database and loading data..."):
+                db_setup = DatabaseSetup(db_path)
+                db_setup.create_tables()
+                db_setup.load_csv_data()
+            
+            st.success("✅ Database created successfully!")
+            return True
+            
+        except Exception as e:
+            st.error(f"❌ Error setting up database: {e}")
+            st.error("Please check that your CSV files are in the 'data' folder.")
+            return False
+    
+    return True
+
+# Run database setup check
+if setup_database_if_needed():
+    # Initialize and run the app only if database is ready
     app = FoodWasteApp()
     app.main_page()
+else:
+    st.stop()
